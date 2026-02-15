@@ -1,0 +1,71 @@
+## Sealed Secrets image
+## ref: https://hub.docker.com/r/bitnami/sealed-secrets-controller/tags
+## @param image.registry Sealed Secrets image registry
+## @param image.repository Sealed Secrets image repository
+## @param image.tag Sealed Secrets image tag (immutable tags are recommended)
+## @param image.pullPolicy Sealed Secrets image pull policy
+## @param image.pullSecrets [array]  Sealed Secrets image pull secrets
+image:
+  registry: docker.io
+  repository: bitnami/sealed-secrets-controller
+  tag: 0.35.0
+  pullPolicy: IfNotPresent
+
+fullnameOverride: 'sealed-secrets-controller'
+
+## @param revisionHistoryLimit Number of old history to retain to allow rollback (If not set, default Kubernetes value is set to 10)
+revisionHistoryLimit: '3'
+
+## @param logInfoStdout Specifies whether the Sealed Secrets controller will log info to stdout
+logInfoStdout: true
+
+## @param logLevel Specifies log level of controller (INFO,ERROR)
+logLevel: 'INFO'
+
+## @param logFormat Specifies log format (text,json)
+logFormat: 'text'
+
+## @param maxRetries Number of maximum retries
+maxRetries: '3'
+
+## Sealed Secret resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+## @param resources.limits [object] The resources limits for the Sealed Secret containers
+## @param resources.requests [object] The requested resources for the Sealed Secret containers
+resources:
+  limits:
+    cpu: '100m'
+    memory: '128Mi'
+  requests:
+    cpu: '100m'
+    memory: '128Mi'
+
+## Sealed Secret service parameters
+service:
+  ## @param service.type Sealed Secret service type
+  type: NodePort
+  ## @param service.loadBalancerClass Sealed Secret service loadBalancerClass
+  loadBalancerClass: ''
+  ## @param service.port Sealed Secret service HTTP port
+  port: 8080
+  ## @param service.nodePort Node port for HTTP
+  ## Specify the nodePort value for the LoadBalancer and NodePort service types
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ## NOTE: choose port between <30000-32767>
+  nodePort: '30081'
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
