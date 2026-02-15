@@ -1,4 +1,5 @@
-sealedSecrets:
+# Values for Bitnami sealed-secrets subchart - key must match dependency name in Chart.yaml
+sealed-secrets:
   ## Sealed Secrets image
   ## ref: https://hub.docker.com/r/bitnami/sealed-secrets-controller/tags
   ## @param image.registry Sealed Secrets image registry
