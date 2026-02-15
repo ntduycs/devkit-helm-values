@@ -1,0 +1,32 @@
+{
+  "name": "devkit-helm-values",
+  "version": "1.0.0",
+  "description": "DevKit Helm Values",
+  "main": "index.js",
+  "scripts": {
+    "lint": "prettier --check \"**/*.{yaml,yml,js}\"",
+    "lint:fix": "prettier --write \"**/*.{yaml,yml,js}\""
+  },
+  "keywords": [
+    "helm",
+    "values",
+    "devkit"
+  ],
+  "author": "DevKit",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ntduycs/devkit-helm-values.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ntduycs/devkit-helm-values/issues"
+  },
+  "engines": {
+    "node": ">=25.6.0"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "js-yaml": "^4.1.0",
+    "prettier": "^3.8.1"
+  }
+}

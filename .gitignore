@@ -1,0 +1,32 @@
+# Flyway
+flyway-*/
+flyway.exe
+flyway
+
+# Node.js
+node_modules/
+
+# Environment-specific config (contains credentials)
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Reports
+reports/
+
+.ai-devkit.json
+AGENTS.md
+docs/
+.cursor/
+.local/

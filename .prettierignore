@@ -1,0 +1,13 @@
+node_modules/
+flyway-*/
+
+# Helm templates contain {{ }} syntax Prettier's YAML parser doesn't understand
+templates/*.yaml
+templates/*.yml
+templates/*.tpl
+reports/
+.cursor/
+.idea/
+.vscode/
+.git/
+.npm/
