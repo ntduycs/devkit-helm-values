@@ -37,3 +37,5 @@ keycloak:
     user: system
     database: FREEPDB1
     password: 123123
+  logging:
+    level: INFO
