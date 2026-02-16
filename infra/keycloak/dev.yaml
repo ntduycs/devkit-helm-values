@@ -24,7 +24,7 @@ keycloak:
   auth:
     adminUser: admin
     adminPassword: admin
-  httpRelativePath: '/keycloak'
+  httpRelativePath: '/keycloak/'
   cache:
     enabled: false
   service:
