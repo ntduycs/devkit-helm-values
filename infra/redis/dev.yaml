@@ -10,14 +10,6 @@ redis:
     ## @param auth.enabled Enable password authentication
     ##
     enabled: false
-  ## @param commonConfiguration [string] Common configuration to be added into the ConfigMap
-  ## ref: https://redis.io/topics/config
-  ##
-  commonConfiguration: |-
-    # Disable AOF https://redis.io/topics/persistence#append-only-file
-    appendonly no
-    # Disable RDB persistence, AOF persistence already disabled.
-    save ""
   ## @section Redis(R) master configuration parameters
   ##
   master:
@@ -36,14 +28,6 @@ redis:
     ##
     persistentVolumeClaimRetentionPolicy:
       enabled: false
-    ## Pod Disruption Budget configuration
-    ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb
-    ## @param master.pdb.create Enable/disable a Pod Disruption Budget creation
-    ## @param master.pdb.minAvailable [object] Minimum number/percentage of pods that should remain scheduled
-    ## @param master.pdb.maxUnavailable [object] Maximum number/percentage of pods that may be made unavailable. Defaults to `1` if both `master.pdb.minAvailable` and `master.pdb.maxUnavailable` are empty.
-    ##
-    pdb:
-      create: false
   ## @section Redis(R) Sentinel configuration parameters
   ##
   sentinel:
