@@ -9,7 +9,7 @@ keycloak:
     registry: docker.banvien.com.vn
     repository: qtkd/dev/keycloak
     tag: latest
-  command: ['/opt/keycloak/bin/kc.sh', 'start']
+  command: ['/opt/keycloak/bin/kc.sh', 'start-dev']
   extraEnvVars:
     - name: KC_DB
       value: 'oracle'
