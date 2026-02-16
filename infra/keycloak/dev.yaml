@@ -9,11 +9,10 @@ keycloak:
     registry: docker.banvien.com.vn
     repository: qtkd/dev/keycloak
     tag: latest
+  command: ['/opt/keycloak/bin/kc.sh', 'start']
   auth:
     adminUser: admin
     adminPassword: admin
-  ## Keycloak 17+ (Quarkus) uses 'kc' not 'kc.sh'. Use image default if empty.
-  command: ['/opt/keycloak/bin/kc', 'start']
   service:
     type: NodePort
     nodePorts:
