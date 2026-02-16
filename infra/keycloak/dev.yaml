@@ -1,4 +1,10 @@
 keycloak:
+  global:
+    ## Security parameters
+    ## @param global.security.allowInsecureImages Allows skipping image verification
+    ##
+    security:
+      allowInsecureImages: true
   image:
     registry: docker.banvien.com.vn
     repository: qtkd/dev/keycloak
