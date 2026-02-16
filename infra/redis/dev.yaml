@@ -13,6 +13,8 @@ redis:
   ## @section Redis(R) master configuration parameters
   ##
   master:
+    ## Disable topology spread for dev (single-node/minimal clusters)
+    topologySpreadConstraints: []
     ## Persistence parameters
     ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
     ##
