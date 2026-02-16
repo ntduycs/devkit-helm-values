@@ -12,7 +12,7 @@ keycloak:
   auth:
     adminUser: admin
     adminPassword: admin
-  extraStartupArgs: 'start'
+  command: ['start']
   service:
     type: NodePort
     nodePorts:
