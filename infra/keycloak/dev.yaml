@@ -25,6 +25,8 @@ keycloak:
     adminUser: admin
     adminPassword: admin
   httpRelativePath: '/keycloak'
+  cache:
+    enabled: false
   service:
     type: NodePort
     nodePorts:
