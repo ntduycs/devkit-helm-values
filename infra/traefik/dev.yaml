@@ -1,0 +1,102 @@
+traefik:
+  deployment:
+    # -- Number of pods of the deployment (only applies when kind == Deployment)
+    replicas: 1
+    # -- Number of old history to retain to allow rollback (If not set, default Kubernetes value is set to 10)
+    revisionHistoryLimit: 3 # @schema type:[integer, null];minimum:0
+
+  # -- [Pod Disruption Budget](https://kubernetes.io/docs/reference/kubernetes-api/policy-resources/pod-disruption-budget-v1/)
+  # MUST be enabled only when deployment.replicas > 1
+  podDisruptionBudget: # @schema additionalProperties: false
+    enabled: false
+
+  ingressClass: # @schema additionalProperties: false
+    # -- Create a default IngressClass for Traefik
+    enabled: true
+    isDefaultClass: true
+    name: 'traefik'
+
+  # Traefik experimental features
+  experimental:
+    # -- Defines whether all plugins must be loaded successfully for Traefik to start
+    abortOnPluginFailure: true
+    fastProxy:
+      # -- Enables the FastProxy implementation.
+      enabled: true
+      # -- Enable debug mode for the FastProxy implementation.
+      debug: false
+
+  api: # @schema additionalProperties: false
+    # -- Enable the dashboard
+    dashboard: false
+    # -- Enable the insecure API (HTTP)
+    insecure: true # @schema type:[boolean, null]
+    # -- Enable the debug API
+    debug: false # @schema type:[boolean, null]
+    # -- Configure API basePath
+    basePath: '' # @schema type:[string, null]; default: "/"
+
+  logs:
+    general:
+      # -- Set [logs format](https://doc.traefik.io/traefik/observability/logs/#format)
+      format: 'common' # @schema enum:["common", "json", null]; type:[string, null]; default: "common"
+      # By default, the level is set to INFO.
+      # -- Alternative logging levels are TRACE, DEBUG, INFO, WARN, ERROR, FATAL, and PANIC.
+      level: 'DEBUG' # @schema enum:[TRACE,DEBUG,INFO,WARN,ERROR,FATAL,PANIC]; default: "INFO"
+      # -- When set to true and format is common, it disables the colorized output.
+      noColor: true
+      otlp:
+        enabled: false
+    access:
+      # -- To enable access logs
+      enabled: true
+      # -- Set [access log format](https://doc.traefik.io/traefik/observability/access-logs/#format)
+      format: 'common' # @schema enum:["common", "genericCLF", "json", null]; type:[string, null]; default: "common"
+      # -- Set [bufferingSize](https://doc.traefik.io/traefik/observability/access-logs/#bufferingsize)
+      bufferingSize: 100 # @schema type:[integer, null]
+      otlp:
+        # -- Set to true in order to enable OpenTelemetry on access logs. Note that experimental.otlpLogs needs to be enabled.
+        enabled: false
+
+  global:
+    checkNewVersion: false
+
+  service:
+    enabled: true
+    # -- Service type: NodePort, LoadBalancer, ClusterIP
+    type: NodePort
+
+  ports:
+    web:
+      nodePort: 30082
+
+  # -- This pod anti-affinity forces the scheduler to put traefik pods
+  # -- on nodes where no other traefik pods are scheduled.
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+          topologyKey: kubernetes.io/hostname
+
+  # -- This topology spread constraint forces the scheduler to spread traefik pods
+  # -- evenly across nodes.
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: traefik
+
+  resources:
+    requests:
+      cpu: '100m'
+      memory: '128Mi'
+    limits:
+      cpu: '500m'
+      memory: '512Mi'
+
+  autoscaling:
+    enabled: false
