@@ -12,7 +12,8 @@ keycloak:
   auth:
     adminUser: admin
     adminPassword: admin
-  command: ['kc.sh', 'start']
+  ## Keycloak 17+ (Quarkus) uses 'kc' not 'kc.sh'. Use image default if empty.
+  command: ['/opt/keycloak/bin/kc', 'start']
   service:
     type: NodePort
     nodePorts:
