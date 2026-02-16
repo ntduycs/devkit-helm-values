@@ -1,0 +1,18 @@
+keycloak:
+  image:
+    registry: docker.banvien.com.vn
+    repository: qtkd/dev/keycloak
+    tag: latest
+  auth:
+    adminUser: admin
+    adminPassword: admin
+  service:
+    type: NodePort
+    nodePorts:
+      http: 30085
+  externalDatabase:
+    host: 'host.docker.internal'
+    port: 1521
+    user: system
+    database: FREEPDB1
+    password: 123123
