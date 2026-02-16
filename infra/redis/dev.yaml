@@ -1,0 +1,54 @@
+redis:
+  ## @param architecture Redis(R) architecture. Allowed values: `standalone` or `replication`
+  ## Mapped from mode: standalone → standalone; master-slave | sentinel → replication
+  ##
+  architecture: standalone
+  ## Redis(R) Authentication parameters
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/redis#setting-the-server-password-on-first-run
+  ##
+  auth:
+    ## @param auth.enabled Enable password authentication
+    ##
+    enabled: false
+  ## @param commonConfiguration [string] Common configuration to be added into the ConfigMap
+  ## ref: https://redis.io/topics/config
+  ##
+  commonConfiguration: |-
+    # Disable AOF https://redis.io/topics/persistence#append-only-file
+    appendonly no
+    # Disable RDB persistence, AOF persistence already disabled.
+    save ""
+  ## @section Redis(R) master configuration parameters
+  ##
+  master:
+    ## Persistence parameters
+    ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+    ##
+    persistence:
+      ## @param master.persistence.enabled Enable persistence on Redis(R) master nodes using Persistent Volume Claims
+      ##
+      enabled: false
+    ## persistentVolumeClaimRetentionPolicy
+    ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention
+    ## @param master.persistentVolumeClaimRetentionPolicy.enabled Controls if and how PVCs are deleted during the lifecycle of a StatefulSet
+    ## @param master.persistentVolumeClaimRetentionPolicy.whenScaled Volume retention behavior when the replica count of the StatefulSet is reduced
+    ## @param master.persistentVolumeClaimRetentionPolicy.whenDeleted Volume retention behavior that applies when the StatefulSet is deleted
+    ##
+    persistentVolumeClaimRetentionPolicy:
+      enabled: false
+    ## Pod Disruption Budget configuration
+    ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb
+    ## @param master.pdb.create Enable/disable a Pod Disruption Budget creation
+    ## @param master.pdb.minAvailable [object] Minimum number/percentage of pods that should remain scheduled
+    ## @param master.pdb.maxUnavailable [object] Maximum number/percentage of pods that may be made unavailable. Defaults to `1` if both `master.pdb.minAvailable` and `master.pdb.maxUnavailable` are empty.
+    ##
+    pdb:
+      create: false
+  ## @section Redis(R) Sentinel configuration parameters
+  ##
+  sentinel:
+    ## @param sentinel.enabled Use Redis(R) Sentinel on Redis(R) pods.
+    ## IMPORTANT: this will disable the master and replicas services and
+    ## create a single Redis(R) service exposing both the Redis and Sentinel ports
+    ##
+    enabled: false
